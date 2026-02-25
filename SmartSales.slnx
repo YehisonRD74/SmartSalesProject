@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="SmartSales.Business/SmartSales.Business.csproj" />
+  <Project Path="SmartSales.Data/SmartSales.Data.csproj" />
   <Project Path="SmartSalesAPI/SmartSalesAPI.csproj" />
 </Solution>
