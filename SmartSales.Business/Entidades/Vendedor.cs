@@ -4,7 +4,9 @@ using System.Text;
 
 namespace SmartSales.Business.Entidades
 {
-    internal class Vendedor
+    public class Vendedor : Usuario
     {
+        public void CrearVenta() { /* Lógica */ }
+        public void GenerarFactura() { /* Lógica */ }
     }
 }
