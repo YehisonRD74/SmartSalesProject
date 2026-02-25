@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Para el protafolio\\SmartSalesProject\\base\\base.csproj": {}
+    "D:\\Para el protafolio\\SmartSalesProject\\base.csproj": {}
   },
   "projects": {
-    "D:\\Para el protafolio\\SmartSalesProject\\base\\base.csproj": {
+    "D:\\Para el protafolio\\SmartSalesProject\\base.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Para el protafolio\\SmartSalesProject\\base\\base.csproj",
+        "projectUniqueName": "D:\\Para el protafolio\\SmartSalesProject\\base.csproj",
         "projectName": "base",
-        "projectPath": "D:\\Para el protafolio\\SmartSalesProject\\base\\base.csproj",
+        "projectPath": "D:\\Para el protafolio\\SmartSalesProject\\base.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Para el protafolio\\SmartSalesProject\\base\\obj\\",
+        "outputPath": "D:\\Para el protafolio\\SmartSalesProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
