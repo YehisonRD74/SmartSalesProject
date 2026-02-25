@@ -55,10 +55,16 @@
                         Configuración
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showTab('crearUsuario')">
+                        Creación de Usuario
+                    </a>
+                </li>
             </ul>
         </nav>
 
-        <div class="main-content">
+        <main class="main-content">
             <div id="dashboard" class="tab-content active">
                 <div class="content-header">
                     <h2>Dashboard General</h2>
@@ -362,7 +368,53 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div id="crearUsuario" class="tab-content">
+                <div class="content-header">
+                    <h2>Gestor de Usuario</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Crear  Usuario</div>
+
+                        <div class="card-body">
+                            <form id="formUsuario">
+                                <div class="form-grid">
+                                    <input type="text" placeholder="Nombre">
+
+                                    <input type="text" placeholder="Apellido">
+
+                                    <input type="text" placeholder="Usuario">
+
+                                    <input type="email" placeholder="Correo">
+
+                                    <input type="password" placeholder="Contraseña">
+
+                                    <div class="selectorTipo">
+                                        <label for="">Administrador</label>
+                                        <input type="checkbox">
+
+                                        <label for="">Usuario</label>
+                                        <input type="checkbox">
+                                    </div>
+                                </div>
+
+                                <div class="actions">
+                                    <button type="submit" class="btn btn-success">
+                                        Crear
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-secondary" onclick="limpiarFormProducto()">
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script src="js/script.js"></script>
