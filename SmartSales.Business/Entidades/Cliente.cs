@@ -4,7 +4,18 @@ using System.Text;
 
 namespace SmartSales.Business.Entidades
 {
-    internal class Cliente
+    public class Cliente
     {
+        public int IdCliente { get; set; }
+        public string Nombre { get; set; }
+        public string Email { get; set; }
+        public string Telefono { get; set; }
+        public string Direccion { get; set; }
+
+        public Cliente BuscarPorEmail(string email)
+        {
+            // Lógica de búsqueda
+            return this;
+        }
     }
 }

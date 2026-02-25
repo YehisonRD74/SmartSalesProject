@@ -4,7 +4,9 @@ using System.Text;
 
 namespace SmartSales.Business.Entidades
 {
-    internal class Administrador
+    public class Administrador : Usuario
     {
+        public void GestionarUsuarios() { /* Lógica */ }
+        public void GestionarProductos() { /* Lógica */ }
     }
 }
