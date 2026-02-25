@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ClienteRepository\" />
+    <Folder Include="FacturaRepository\" />
+    <Folder Include="DetalleVentaRepository\" />
+    <Folder Include="ProductoRepository\" />
+    <Folder Include="VentaRepository\" />
+    <Folder Include="UsuarioRepository\" />
+  </ItemGroup>
+
 </Project>
