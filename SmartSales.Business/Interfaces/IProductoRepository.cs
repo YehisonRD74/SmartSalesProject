@@ -11,7 +11,7 @@ namespace SmartSales.Business.Interfaces
         public Task ModificarProductoAsync(Producto producto);
         public Task EliminarProductoAsync(int id);
         public Task<List<Producto>> MostrarProductosAsync();
-        public Task<Producto> BuscarProductoPorNombreAsync(string nombre);
+        public Task<List<Producto>> BuscarProductoPorNombreAsync(string nombre);
         public Task<Producto> BuscarProductoPorIDAsync(int id);
 
     }

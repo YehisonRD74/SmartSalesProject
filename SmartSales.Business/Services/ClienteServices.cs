@@ -30,11 +30,11 @@ namespace SmartSales.Business.Services
         {
             return await _clienteRepository.MostrarClientesAsync();
         }
-        public async Task<Cliente> BuscarClientePorNombre(string nombre)
+        public async Task<List<Cliente>> BuscarClientePorNombre(string nombre)
         {
             return await _clienteRepository.BuscarClientePorNombreAsync(nombre);
         }
-        public async Task<Cliente> BuscarClientePorID(int id)
+        public async Task<Cliente> BuscarClientePorID(int? id)
         {
             return await _clienteRepository.BuscarClientePorIDAsync(id);
         }

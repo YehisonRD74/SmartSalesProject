@@ -10,38 +10,42 @@ namespace SmartSalesAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ClienteController : Controller
+    public class ClienteController : ControllerBase
     {
         private readonly ClienteServices _clienteServices;
-        public ClienteController()
+        public ClienteController(ClienteServices clienteServices)
         {
-            _clienteServices = new ClienteServices(new ClienteRepository());
+            _clienteServices = clienteServices;
         }
-
+        
+        //Crear Cliente
         [HttpPost]
         public async Task<IActionResult> CrearCliente([FromBody] CrearClienteDTO cliente)
         {
             var clienteEntity = ClienteMapper.ToEntity(cliente);
-            if (string.IsNullOrEmpty(clienteEntity.Nombre) || string.IsNullOrEmpty(clienteEntity.Email) || string.IsNullOrEmpty(clienteEntity.Telefono))
+            if (string.IsNullOrEmpty(clienteEntity.Nombre) || string.IsNullOrEmpty(clienteEntity.Telefono))
             {
-                return BadRequest("No se pudo crear el cliente");
+                return BadRequest("Debes de llenar estos campos");
             }
             await _clienteServices.CrearCliente(clienteEntity);
-            return Created();
+            return StatusCode(201, new { message = "Cliente creado exitosamente.", data = ClienteMapper.ToDTO(clienteEntity)});
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> ModificarCliente([FromBody] ModificarClienteDTO cliente)
+        //Modificar cliente
+        [HttpPut("{id}")] 
+        public async Task<IActionResult> ModificarCliente([FromRoute] int id, [FromBody] ModificarClienteDTO cliente)
         {
+            if (id != cliente.Id) return BadRequest("El ID de la ruta no coincide con el del cuerpo.");
+
+            // AQUÍ VA TU VALIDACIÓN ESTRELLA:
+            var existing = await _clienteServices.BuscarClientePorID(id);
+            if (existing == null)
+            {
+                return NotFound("No se encontró el cliente para modificar"); // NotFound (404) es más correcto aquí que BadRequest
+            }
+
             var clienteEntity = ClienteMapper.ToEntity(cliente);
-            if (clienteEntity == null)
-            {
-                return BadRequest("No se pudo modificar el cliente");
-            }
-            else if (clienteEntity.IdCliente == null || clienteEntity.IdCliente <= 0)
-            {
-                return BadRequest("ID de cliente no válido");
-            }
+
             await _clienteServices.ModificarCliente(clienteEntity);
             return NoContent();
         }
@@ -57,7 +61,7 @@ namespace SmartSalesAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet("MostrarClientes")]
+        [HttpGet]
         public async Task<IActionResult> MostrarClientes()
         {
             var existing = await _clienteServices.MostrarClientes();
@@ -82,8 +86,8 @@ namespace SmartSalesAPI.Controllers
             return Ok(clienteDTO);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> BuscarClientePorNombre([FromQuery] string nombre)
+        [HttpGet("Buscar")]
+        public async Task<IActionResult> BuscarClientePorNombre([FromQuery] string? nombre)
         {
             if (string.IsNullOrWhiteSpace(nombre))
             {

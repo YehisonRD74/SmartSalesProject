@@ -28,7 +28,7 @@ namespace SmartSales.Data.ClienteRepository
             }
         }
 
-        public async Task<Cliente> BuscarClientePorIDAsync(int id)
+        public async Task<Cliente> BuscarClientePorIDAsync(int? id)
         {
             var cliente = new Cliente();
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
@@ -38,7 +38,7 @@ namespace SmartSales.Data.ClienteRepository
                     cmd.CommandType = CommandType.StoredProcedure;
                     await cnn.OpenAsync();
 
-                    cmd.Parameters.AddWithValue("@IdCliente", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
@@ -57,9 +57,9 @@ namespace SmartSales.Data.ClienteRepository
             }
         }
 
-        public async Task<Cliente> BuscarClientePorNombreAsync(string nombre)
+        public async Task<List<Cliente>> BuscarClientePorNombreAsync(string nombre)
         {
-            Cliente cliente = null;
+            List<Cliente> clientes = new List<Cliente>();
 
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
             {
@@ -73,17 +73,18 @@ namespace SmartSales.Data.ClienteRepository
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
-                        if (await reader.ReadAsync())
+                        while (await reader.ReadAsync())
                         {
-                            cliente = new Cliente
+                            var cliente = new Cliente
                             {
                                 IdCliente = reader.GetInt32(reader.GetOrdinal("IdCliente")),
                                 Nombre = reader.GetString(reader.GetOrdinal("Nombre")),
                                 Email = reader.GetString(reader.GetOrdinal("Email")),
                                 Telefono = reader.GetString(reader.GetOrdinal("Telefono")),
                             };
+                            clientes.Add(cliente);
                         }
-                        return cliente;
+                        return clientes;
                     }
                 }
             }

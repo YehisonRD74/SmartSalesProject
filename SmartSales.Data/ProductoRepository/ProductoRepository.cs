@@ -22,10 +22,9 @@ namespace SmartSales.Data.ProductoRepository
                     cmd.CommandType = CommandType.StoredProcedure;
                     await cnn.OpenAsync();
 
-                    cmd.Parameters.AddWithValue("@Nombre", (object)producto.Nombre ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Descripcion", (object)producto.Descripcion ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Precio", (object)producto.Precio ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Stock", (object)producto.Stock ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Nombre", producto.Nombre);
+                    cmd.Parameters.AddWithValue("@Precio", producto.Precio );
+                    cmd.Parameters.AddWithValue("@Stock", producto.Stock);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
@@ -41,9 +40,8 @@ namespace SmartSales.Data.ProductoRepository
                     cmd.CommandType = CommandType.StoredProcedure;
                     await cnn.OpenAsync();
 
-                    cmd.Parameters.AddWithValue("@IdProducto", producto.IdProducto);
+                    cmd.Parameters.AddWithValue("@Id", producto.IdProducto);
                     cmd.Parameters.AddWithValue("@Nombre", (object)producto.Nombre ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Descripcion", (object)producto.Descripcion ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Precio", (object)producto.Precio ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Stock", (object)producto.Stock ?? DBNull.Value);
 
@@ -61,7 +59,7 @@ namespace SmartSales.Data.ProductoRepository
                     cmd.CommandType = CommandType.StoredProcedure;
                     await cnn.OpenAsync();
 
-                    cmd.Parameters.AddWithValue("@IdProducto", id);
+                    cmd.Parameters.AddWithValue("@IdProdæææ", id);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
@@ -100,7 +98,7 @@ namespace SmartSales.Data.ProductoRepository
                     cmd.CommandType = CommandType.StoredProcedure;
                     await cnn.OpenAsync();
 
-                    cmd.Parameters.AddWithValue("@IdProducto", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
@@ -115,9 +113,9 @@ namespace SmartSales.Data.ProductoRepository
             return producto; // Devolverá null si no lo encuentra
         }
 
-        public async Task<Producto> BuscarProductoPorNombreAsync(string nombre)
+        public async Task<List<Producto>> BuscarProductoPorNombreAsync(string nombre)
         {
-            Producto producto = null;
+            List<Producto> productos = new List<Producto>();
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetProductByName", cnn))
@@ -129,14 +127,15 @@ namespace SmartSales.Data.ProductoRepository
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
-                        if (await reader.ReadAsync())
+                        while(await reader.ReadAsync())
                         {
-                            producto = MapearProducto(reader);
+                            var producto = MapearProducto(reader);
+                            productos.Add(producto);
                         }
                     }
                 }
             }
-            return producto;
+            return productos;
         }
 
         // --- MÉTODO DE APOYO (DRY: Don't Repeat Yourself) ---
@@ -147,7 +146,6 @@ namespace SmartSales.Data.ProductoRepository
             {
                 IdProducto = reader.IsDBNull(reader.GetOrdinal("IdProducto")) ? null : reader.GetInt32(reader.GetOrdinal("IdProducto")),
                 Nombre = reader.IsDBNull(reader.GetOrdinal("Nombre")) ? null : reader.GetString(reader.GetOrdinal("Nombre")),
-                Descripcion = reader.IsDBNull(reader.GetOrdinal("Descripcion")) ? null : reader.GetString(reader.GetOrdinal("Descripcion")),
                 Precio = reader.IsDBNull(reader.GetOrdinal("Precio")) ? null : reader.GetDecimal(reader.GetOrdinal("Precio")),
                 Stock = reader.IsDBNull(reader.GetOrdinal("Stock")) ? null : reader.GetInt32(reader.GetOrdinal("Stock"))
             };

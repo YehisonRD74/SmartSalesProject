@@ -11,7 +11,7 @@ namespace SmartSales.Business.Interfaces
         Task ActualizarClienteAsync(Cliente cliente);
         Task EliminarClienteAsync(int id);
         Task<List<Cliente>> MostrarClientesAsync();
-        Task<Cliente> BuscarClientePorNombreAsync(string nombre);
-        Task<Cliente> BuscarClientePorIDAsync(int id);
+        Task<List<Cliente>> BuscarClientePorNombreAsync(string nombre);
+        Task<Cliente> BuscarClientePorIDAsync(int? id);
     }
 }
