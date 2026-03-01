@@ -7,10 +7,11 @@ namespace SmartSales.Business.Interfaces
 {
     public interface IClienteRepository
     {
-        public void CrearCliente();
-        public void ActualizarCliente();
-        public void EliminarCliente();
-        public List<Cliente> MostrarClientes();
-
+        Task CrearClienteAsync(Cliente cliente);
+        Task ActualizarClienteAsync(Cliente cliente);
+        Task EliminarClienteAsync(int id);
+        Task<List<Cliente>> MostrarClientesAsync();
+        Task<Cliente> BuscarClientePorNombreAsync(string nombre);
+        Task<Cliente> BuscarClientePorIDAsync(int id);
     }
 }
