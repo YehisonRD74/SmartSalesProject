@@ -98,7 +98,7 @@ namespace SmartSalesAPI.Controllers
             {
                 return NotFound("Cliente no encontrado");
             }
-            var clienteDto = ClienteMapper.ToDTO(existing);
+            var clienteDto = ClienteMapper.ToDTOList(existing);
             return Ok(clienteDto);
         }
 
