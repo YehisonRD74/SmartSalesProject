@@ -1,3 +1,13 @@
+:root{
+    --color-white: #fff;
+    --backgroung-color-title: #1C5F7B;
+    --Primary-color: #2e86ab;
+    --background-button-blue: #5dade2;
+    --boder-color-white: #E5F2F7;
+    --background-card-header: #F0F8FC;
+    --color-gray: #6c757d;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -18,8 +28,8 @@ body {
     
 .sidebar {
     width: 250px;
-    background: #2E86AB;
-    color: white;
+    background: var(--Primary-color);
+    color: var(--color-white);
     flex-shrink: 0;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -27,7 +37,7 @@ body {
     
 .sidebar-header {
     padding: 20px;
-    background: #1C5F7B;
+    background: var(--backgroung-color-title);
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
     
@@ -60,13 +70,13 @@ body {
     
 .nav-link:hover {
     background: rgba(255,255,255,0.15);
-    color: white;
+    color: var(--color-white);
     transform: translateX(5px);
 }
     
 .nav-link.active {
-    background: #5DADE2;
-    color: white;
+    background: var(--background-button-blue);
+    color: var(--color-white);
     font-weight: 600;
 }
     
@@ -84,14 +94,14 @@ body {
 }
     
 .content-header {
-    background: white;
+    background: var(--color-white);
     padding: 20px 30px;
     border-bottom: 1px solid #e9ecef;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
     
 .content-header h2 {
-    color: #2E86AB;
+    color: var(--Primary-color);
     font-size: 1.5rem;
     font-weight: 600;
 }
@@ -121,20 +131,20 @@ body {
 }
     
 .card {
-    background: white;
+    background: var(--color-white);
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.06);
     margin-bottom: 25px;
     overflow: hidden;
-    border: 1px solid #E5F2F7;
+    border: 1px solid var(--border-color-white);
 }
     
 .card-header {
     padding: 20px;
-    background: #F0F8FC;
-    border-bottom: 1px solid #E5F2F7;
+    background: var(--background-card-header);
+    border-bottom: 1px solid var(--border-color-white);
     font-weight: 600;
-    color: #2E86AB;
+    color: var(--Primary-color);
 }
     
 .card-body {
@@ -157,22 +167,22 @@ body {
 .form-group label {
     margin-bottom: 8px;
     font-weight: 600;
-    color: #2E86AB;
+    color: var(--Primary-color);
     font-size: 0.9rem;
 }
     
 input, select, textarea {
     padding: 12px;
-    border: 2px solid #E5F2F7;
+    border: 2px solid var(--border-color-white);
     border-radius: 8px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    background: white;
+    background: var(--color-white);
 }
     
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border-color: #5DADE2;
+    border-color: var(--background-button-blue);
     box-shadow: 0 0 0 3px rgba(93, 173, 226, 0.1);
 }
     
@@ -185,8 +195,8 @@ input:focus, select:focus, textarea:focus {
     top: 100%;
     left: 0;
     right: 0;
-    background: white;
-    border: 2px solid #5DADE2;
+    background: var(--color-white);
+    border: 2px solid var(--background-button-blue);
     border-top: none;
     border-radius: 0 0 8px 8px;
     max-height: 200px;
@@ -198,12 +208,12 @@ input:focus, select:focus, textarea:focus {
 .autocomplete-item {
     padding: 12px;
     cursor: pointer;
-    border-bottom: 1px solid #E5F2F7;
+    border-bottom: 1px solid var(--border-color-white);
     transition: background 0.2s ease;
 }
     
 .autocomplete-item:hover {
-    background: #F0F8FC;
+    background: var(--background-card-header);
 }
     
 .autocomplete-item:last-child {
@@ -212,11 +222,11 @@ input:focus, select:focus, textarea:focus {
     
 .autocomplete-code {
     font-weight: 600;
-    color: #2E86AB;
+    color: var(--Primary-color);
 }
     
 .autocomplete-name {
-    color: #6c757d;
+    color: var(--color-gray);
     font-size: 0.85rem;
     margin-top: 2px;
 }
@@ -242,18 +252,18 @@ input:focus, select:focus, textarea:focus {
 }
     
 .btn-primary {
-    background: #5DADE2;
-    color: white;
+    background: var(--background-button-blue);
+    color: var(--color-white);
 }
     
 .btn-success {
     background: #28a745;
-    color: white;
+    color: var(--color-white);
 }
     
 .btn-danger {
     background: #dc3545;
-    color: white;
+    color: var(--color-white);
 }
     
 .btn-warning {
@@ -262,38 +272,38 @@ input:focus, select:focus, textarea:focus {
 }
     
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: var(--color-gray);
+    color: var(--color-white);
 }
     
 .btn-info {
     background: #17a2b8;
-    color: white;
+    color: var(--color-white);
 }
     
 .table-container {
     overflow-x: auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid #E5F2F7;
+    border: 1px solid var(--border-color-white);
 }
     
 table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background: var(--color-white);
 }
     
 th, td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #E5F2F7;
+    border-bottom: 1px solid var(--border-color-white);
 }
     
 th {
-    background: #F0F8FC;
+    background: var(--background-card-header);
     font-weight: 600;
-    color: #2E86AB;
+    color: var(--Primary-color);
     font-size: 0.9rem;
 }
     
@@ -371,7 +381,7 @@ tr:hover {
     display: none;
     text-align: center;
     padding: 20px;
-    color: #5DADE2;
+    color: var(--background-button-blue);
     font-style: italic;
 }
     
@@ -383,24 +393,24 @@ tr:hover {
 }
     
 .stat-card {
-    background: white;
+    background: var(--color-white);
     padding: 25px;
     border-radius: 12px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0,0,0,0.06);
-    border-left: 4px solid #5DADE2;
-    border: 1px solid #E5F2F7;
+    border-left: 4px solid var(--background-button-blue);
+    border: 1px solid var(--border-color-white);
 }
     
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #2E86AB;
+    color: var(--Primary-color);
     margin-bottom: 5px;
 }
     
 .stat-label {
-    color: #6c757d;
+    color: var(--color-gray);
     font-size: 0.9rem;
     font-weight: 500;
 }
@@ -412,7 +422,7 @@ tr:hover {
     margin-bottom: 20px;
 }
     
-@media (max-width: 768px) {
+@media (max-width: 568px) {
     .sidebar {
         width: 100%;
         height: auto;

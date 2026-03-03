@@ -1,0 +1,39 @@
+:root{
+    --color-white: #fff;
+    --backgroung-color-title: #1C5F7B;
+    --Primary-color: #2e86ab;
+    --background-button-blue: #5dade2;
+    --boder-color-light-blue: #E5F2F7;
+    --background-card-header: #F0F8FC;
+    --color-gray: #6c757d;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--boder-color-light-blue);
+    padding: 30px;
+}
+
+.tituloLogin h1{
+    color: var(--backgroung-color-title);
+}
+
+.btn-iniciar{
+    color: var(--color-white);
+    border: none;
+    background: var(--background-button-blue);
+}

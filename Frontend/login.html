@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+    <title>SmartSales - Login</title>
 </head>
 <body>
-    <div>
-        <div>
-            <h1>Inicio de Sesión</h1>
-        </div>
+    <div class="container">
+        <div class="content-login">
+            <div class="tituloLogin">
+                <h1>Inicio de Sesión</h1>
+            </div>
 
-        <div class="login">
-            <input type="text" id="loginUser" placeholder="Ingrese usuario">
-            <input type="password" id="loginPass" placeholder="Ingrese contraseña">
-
-            <button onclick="login()">Iniciar sesión</button>
-            <a href="#">Olvide mi contraseña</a>
+            <div class="login">
+                <div>
+                    <input type="text" id="loginUser" placeholder="Ingrese usuario">
+                    <input type="password" id="loginPass" placeholder="Ingrese contraseña">
+                </div>
+                
+                <div>
+                    <button class="btn-iniciar" onclick="login()">Iniciar sesión</button>
+                    <a href="#">Olvide mi contraseña</a>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="js/login.js"></script>
 </body>
 </html>
