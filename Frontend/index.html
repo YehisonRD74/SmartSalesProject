@@ -23,26 +23,44 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" onclick="showTab('productos')">
-                        Nuevo producto
+                    <a class="nav-link" onclick="showTab('usuarios')">
+                        Usuarios
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" onclick="showTab('movimientos')">
-                        Movimientos
+                    <a class="nav-link" onclick="showTab('clientes')">
+                        Clientes
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showTab('productos')">
+                        Productos
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" onclick="showTab('inventario')">
-                        Inventario
+                        Stock
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" onclick="showTab('gestorClientes')">
-                        Clientes
+                    <a class="nav-link" onclick="showTab('ventas')">
+                        Ventas
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showTab('facturas')">
+                        Facturas
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showTab('historial')">
+                        Historial
                     </a>
                 </li>
 
@@ -63,13 +81,23 @@
                         Configuración
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" onclick="showTab('crearUsuario')">
-                        Creación de Usuario
-                    </a>
-                </li>
             </ul>
+
+            <div class="infoUsuario">
+                <ul>
+                    <li>
+                        <div class="nombreUsuario"></div>
+                    </li>
+
+                    <li>
+                        <div>
+                            <button onclick="logout()">
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </nav>
 
         <!-- Main del proyecto -->
@@ -99,6 +127,92 @@
                             </div>
 
                             <div id="alertsContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Gestor de usuario ===== -->
+            <div id="usuarios" class="tab-content">
+                <div class="content-header">
+                    <h2>Gestor de Usuario</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Crear  Usuario</div>
+
+                        <div class="card-body">
+                            <form id="formUsuario">
+                                <div class="form-grid">
+                                    <input type="text" placeholder="Nombre">
+
+                                    <input type="text" placeholder="Apellido">
+
+                                    <input type="text" placeholder="Usuario">
+
+                                    <input type="email" placeholder="Correo">
+
+                                    <input type="password" placeholder="Contraseña">
+
+                                    <div class="selectorTipo">
+                                        <label for="">Administrador</label>
+                                        <input type="checkbox">
+
+                                        <label for="">Vendedor</label>
+                                        <input type="checkbox">
+                                    </div>
+                                </div>
+
+                                <div class="actions">
+                                    <button type="submit" class="btn btn-success">
+                                        Crear
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-secondary" onclick="limpiarFormProducto()">
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">Lista de Usuarios</div>
+
+                        <div class="card-body">
+                            <div class="usuariosList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Gestor de clientes ===== -->
+            <div id="clientes" class="tab-content">
+                <div class="content-header">
+                    <h2>Gestor de Clientes</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Clientes Actuales</div>
+
+                        <div class="card-body">
+                            <div class="actions">
+                                <button class="btn btn-primary" onclick="mostrarClientes()">
+                                    Actualizar Lista
+                                </button>
+
+                                <button class="btn btn-success" onclick="exportarClientes()">
+                                    Exportar CSV
+                                </button>
+                            </div>
+
+                            <div id="loading" class="loading">Cargando Clientes...</div>
+                            
+                            <div class="table-container">
+                                <div id="clientesTable"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,13 +271,106 @@
                             <div id="msgProd"></div>
                         </div>
                     </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Lista Productos</div>
+                        
+                        <div class="card-body">
+                            <div class="listaProductos"></div>
+                            
+                            <div id="msgProd"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ===== Movimientos ===== -->
-            <div id="movimientos" class="tab-content">
+            <!-- ===== Inventario ===== -->
+            <div id="inventario" class="tab-content">
                 <div class="content-header">
-                    <h2>Registro de Movimientos</h2>
+                    <h2>Control de Inventario</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Stock Actual</div>
+
+                        <div class="card-body">
+                            <div class="actions">
+                                <button class="btn btn-primary" onclick="mostrarStock()">
+                                    Actualizar Stock
+                                </button>
+
+                                <button class="btn btn-success" onclick="exportarStock()">
+                                    Exportar CSV
+                                </button>
+
+                                <button class="btn btn-warning" onclick="mostrarAlertas()">
+                                    Solo Alertas
+                                </button>
+                            </div>
+
+                            <div id="loading" class="loading">Cargando inventario...</div>
+                            
+                            <div class="table-container">
+                                <div id="stockTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Ventas ===== -->
+            <div id="ventas" class="tab-content">
+                <div class="content-header">
+                    <h2>Control de Ventas</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Ventas</div>
+
+                        <div class="card-body">
+                            <div class="actions">
+                            </div>
+
+                            <div id="loading" class="loading">Cargando ventas...</div>
+                            
+                            <div class="table-container">
+                                <div id="ventasTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Facturas ===== -->
+            <div id="facturas" class="tab-content">
+                <div class="content-header">
+                    <h2>Facturas</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Facturas</div>
+
+                        <div class="card-body">
+                            <div class="actions">
+                            </div>
+
+                            <div id="loading" class="loading">Cargando facturas...</div>
+                            
+                            <div class="table-container">
+                                <div id="facturasTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Historial / Movimientos ===== -->
+            <div id="historial" class="tab-content">
+                <div class="content-header">
+                    <h2>Historial</h2>
                 </div>
 
                 <div class="content-body">
@@ -223,77 +430,6 @@
                             </form>
 
                             <div id="msgMov"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ===== Inventario ===== -->
-            <div id="inventario" class="tab-content">
-                <div class="content-header">
-                    <h2>Control de Inventario</h2>
-                </div>
-
-                <div class="content-body">
-                    <div class="card">
-                        <div class="card-header">Stock Actual</div>
-
-                        <div class="card-body">
-                            <div class="actions">
-                                <button class="btn btn-primary" onclick="mostrarStock()">
-                                    Actualizar Stock
-                                </button>
-
-                                <button class="btn btn-success" onclick="exportarStock()">
-                                    Exportar CSV
-                                </button>
-
-                                <button class="btn btn-warning" onclick="mostrarAlertas()">
-                                    Solo Alertas
-                                </button>
-                            </div>
-
-                            <div id="loading" class="loading">Cargando inventario...</div>
-                            
-                            <div class="table-container">
-                                <div id="stockTable"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- ===== Gestor de clientes ===== -->
-            <div id="gestorClientes" class="tab-content">
-                <div class="content-header">
-                    <h2>Gestor de Clientes</h2>
-                </div>
-
-                <div class="content-body">
-                    <div class="card">
-                        <div class="card-header">Clientes Actuales</div>
-
-                        <div class="card-body">
-                            <div class="actions">
-                                <button class="btn btn-primary" onclick="mostrarClientes()">
-                                    Actualizar Lista
-                                </button>
-
-                                <button class="btn btn-success" onclick="exportarClientes()">
-                                    Exportar CSV
-                                </button>
-
-                                <button class="btn btn-warning" onclick="mostrarAlertas()">
-                                    Solo Alertas
-                                </button>
-                            </div>
-
-                            <div id="loading" class="loading">Cargando inventario...</div>
-                            
-                            <div class="table-container">
-                                <div id="clientesTable"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -387,53 +523,6 @@
                 </div>
             </div>
 
-            <!-- ===== Gestor de usuario ===== -->
-            <div id="crearUsuario" class="tab-content">
-                <div class="content-header">
-                    <h2>Gestor de Usuario</h2>
-                </div>
-
-                <div class="content-body">
-                    <div class="card">
-                        <div class="card-header">Crear  Usuario</div>
-
-                        <div class="card-body">
-                            <form id="formUsuario">
-                                <div class="form-grid">
-                                    <input type="text" placeholder="Nombre">
-
-                                    <input type="text" placeholder="Apellido">
-
-                                    <input type="text" placeholder="Usuario">
-
-                                    <input type="email" placeholder="Correo">
-
-                                    <input type="password" placeholder="Contraseña">
-
-                                    <div class="selectorTipo">
-                                        <label for="">Administrador</label>
-                                        <input type="checkbox">
-
-                                        <label for="">Usuario</label>
-                                        <input type="checkbox">
-                                    </div>
-                                </div>
-
-                                <div class="actions">
-                                    <button type="submit" class="btn btn-success">
-                                        Crear
-                                    </button>
-                                    
-                                    <button type="button" class="btn btn-secondary" onclick="limpiarFormProducto()">
-                                        Limpiar
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- ===== Configuracion ===== -->
             <div id="configuracion" class="tab-content">
                 <div class="content-header">
@@ -462,9 +551,9 @@
                                     Reset Sistema
                                 </button>
 
-                                <button class="btn btn-danger" onclick="cerrarSesion()">
+                                <!-- <button class="btn btn-danger" onclick="cerrarSesion()">
                                     Cerrar Sesion
-                                </button>
+                                </button> -->
                             </div>
 
                             <div id="configResults"></div>
