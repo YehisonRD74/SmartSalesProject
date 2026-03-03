@@ -13,6 +13,8 @@
                 <h1>SmartSales</h1>
             </div>
 
+            <!-- Barra de navegacion -->
+
             <ul class="nav-menu">
                 <li class="nav-item">
                     <a class="nav-link active" onclick="showTab('dashboard')">
@@ -35,6 +37,12 @@
                 <li class="nav-item">
                     <a class="nav-link" onclick="showTab('inventario')">
                         Inventario
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showTab('gestorClientes')">
+                        Clientes
                     </a>
                 </li>
 
@@ -64,7 +72,10 @@
             </ul>
         </nav>
 
+        <!-- Main del proyecto -->
+
         <main class="main-content">
+            <!-- ===== Dashboard ===== -->
             <div id="dashboard" class="tab-content active">
                 <div class="content-header">
                     <h2>Dashboard General</h2>
@@ -93,6 +104,7 @@
                 </div>
             </div>
 
+            <!-- ===== Productos ===== -->
             <div id="productos" class="tab-content">
                 <div class="content-header">
                     <h2>Gestión de Productos</h2>
@@ -148,6 +160,7 @@
                 </div>
             </div>
 
+            <!-- ===== Movimientos ===== -->
             <div id="movimientos" class="tab-content">
                 <div class="content-header">
                     <h2>Registro de Movimientos</h2>
@@ -215,6 +228,7 @@
                 </div>
             </div>
 
+            <!-- ===== Inventario ===== -->
             <div id="inventario" class="tab-content">
                 <div class="content-header">
                     <h2>Control de Inventario</h2>
@@ -249,6 +263,43 @@
                 </div>
             </div>
 
+
+            <!-- ===== Gestor de clientes ===== -->
+            <div id="gestorClientes" class="tab-content">
+                <div class="content-header">
+                    <h2>Gestor de Clientes</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Clientes Actuales</div>
+
+                        <div class="card-body">
+                            <div class="actions">
+                                <button class="btn btn-primary" onclick="mostrarClientes()">
+                                    Actualizar Lista
+                                </button>
+
+                                <button class="btn btn-success" onclick="exportarClientes()">
+                                    Exportar CSV
+                                </button>
+
+                                <button class="btn btn-warning" onclick="mostrarAlertas()">
+                                    Solo Alertas
+                                </button>
+                            </div>
+
+                            <div id="loading" class="loading">Cargando inventario...</div>
+                            
+                            <div class="table-container">
+                                <div id="clientesTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Reportes ===== -->
             <div id="reportes" class="tab-content">
                 <div class="content-header">
                     <h2>Reportes y Análisis</h2>
@@ -300,6 +351,7 @@
                 </div>
             </div>
 
+            <!-- ===== Busqueda ===== -->
             <div id="buscar" class="tab-content">
                 <div class="content-header">
                     <h2>Búsqueda de Productos</h2>
@@ -335,40 +387,7 @@
                 </div>
             </div>
 
-            <div id="configuracion" class="tab-content">
-                <div class="content-header">
-                    <h2>Configuración del Sistema</h2>
-                </div>
-
-                <div class="content-body">
-                    <div class="card">
-                        <div class="card-header">Herramientas de Administración</div>
-
-                        <div class="card-body">
-                            <div class="actions">
-                                <button class="btn btn-info" onclick="validarIntegridad()">
-                                    Validar Integridad
-                                </button>
-
-                                <button class="btn btn-success" onclick="inicializarSistema()">
-                                    Inicializar Sistema
-                                </button>
-
-                                <button class="btn btn-warning" onclick="limpiarTodosFormularios()">
-                                    Limpiar Todo
-                                </button>
-
-                                <button class="btn btn-danger" onclick="confirmarReset()">
-                                    Reset Sistema
-                                </button>
-                            </div>
-
-                            <div id="configResults"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <!-- ===== Gestor de usuario ===== -->
             <div id="crearUsuario" class="tab-content">
                 <div class="content-header">
                     <h2>Gestor de Usuario</h2>
@@ -410,6 +429,45 @@
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Configuracion ===== -->
+            <div id="configuracion" class="tab-content">
+                <div class="content-header">
+                    <h2>Configuración del Sistema</h2>
+                </div>
+
+                <div class="content-body">
+                    <div class="card">
+                        <div class="card-header">Herramientas de Administración</div>
+
+                        <div class="card-body">
+                            <div class="actions">
+                                <button class="btn btn-info" onclick="validarIntegridad()">
+                                    Validar Integridad
+                                </button>
+
+                                <button class="btn btn-success" onclick="inicializarSistema()">
+                                    Inicializar Sistema
+                                </button>
+
+                                <button class="btn btn-warning" onclick="limpiarTodosFormularios()">
+                                    Limpiar Todo
+                                </button>
+
+                                <button class="btn btn-danger" onclick="confirmarReset()">
+                                    Reset Sistema
+                                </button>
+
+                                <button class="btn btn-danger" onclick="cerrarSesion()">
+                                    Cerrar Sesion
+                                </button>
+                            </div>
+
+                            <div id="configResults"></div>
                         </div>
                     </div>
                 </div>
