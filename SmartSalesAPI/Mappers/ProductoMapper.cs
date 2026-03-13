@@ -25,6 +25,7 @@ namespace SmartSalesAPI.Mappers
                 Stock = crearProductoDTO.Stock
             };
         }
+
         public static Producto ToProducto(ModificarProductoDTO modificarProductoDTO)
         {
             return new Producto
