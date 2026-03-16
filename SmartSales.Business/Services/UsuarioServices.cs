@@ -30,7 +30,7 @@ namespace SmartSales.Business.Services
         {
             return await _usuarioRepository.MostrarUsuariosAsync();
         }
-        public async Task<Usuario> BuscarUsuarioPorNombre(string nombre)
+        public async Task<List<Usuario>> BuscarUsuarioPorNombre(string nombre)
         {
             return await _usuarioRepository.BuscarUsuarioPorNombreAsync(nombre);
         }

@@ -11,7 +11,7 @@ namespace SmartSales.Business.Interfaces
         public Task ModificarUsuarioAsync(Usuario usuario);
         public Task CambiarEstadoUsuarioAsync(int id, bool estado);
         public Task<List<Usuario>> MostrarUsuariosAsync();
-        public Task<Usuario> BuscarUsuarioPorNombreAsync(string nombre);
+        public Task<List<Usuario>> BuscarUsuarioPorNombreAsync(string nombre);
         public Task<Usuario> BuscarUsuarioPorIDAsync(int id);
     }
 }
