@@ -18,7 +18,8 @@ namespace SmartSales.Data.UsuarioRepository
 
                 using (SqlCommand cmd =  new SqlCommand("Sp_GetUserById", cnn))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", id);
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
                         if (await reader.ReadAsync())
@@ -37,9 +38,9 @@ namespace SmartSales.Data.UsuarioRepository
             }
         }
 
-        public async Task<Usuario> BuscarUsuarioPorNombreAsync(string nombre)
+        public async Task<List<Usuario>> BuscarUsuarioPorNombreAsync(string nombre)
         {
-            var usuario = new Usuario();
+            List<Usuario> usuarios = new List<Usuario>();
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
             {
                 await cnn.OpenAsync();
@@ -51,17 +52,18 @@ namespace SmartSales.Data.UsuarioRepository
                     cmd.Parameters.AddWithValue("@Nombre", nombre);
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
-                        if (await reader.ReadAsync())
+                        while (await reader.ReadAsync())
                         {
-                            usuario = new Usuario()
+                            var usuario = new Usuario()
                             {
                                 IdUsuario = reader.GetInt32(reader.GetOrdinal("IdUsuario")),
                                 Nombre = reader.GetString(reader.GetOrdinal("Nombre")),
                                 Email = reader.GetString(reader.GetOrdinal("Email")),
                                 Rol = reader.GetString(reader.GetOrdinal("Rol"))
                             };
+                            usuarios.Add(usuario);
                         }
-                        return usuario;
+                        return usuarios;
                     }
                 }
             }
@@ -130,7 +132,7 @@ namespace SmartSales.Data.UsuarioRepository
             {
                 await cnn.OpenAsync();
 
-                using (SqlCommand cmd = new SqlCommand("Sp_GetUserByName", cnn))
+                using (SqlCommand cmd = new SqlCommand("Sp_GetAllUser", cnn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
@@ -142,7 +144,8 @@ namespace SmartSales.Data.UsuarioRepository
                                 IdUsuario = reader.GetInt32(reader.GetOrdinal("IdUsuario")),
                                 Nombre = reader.GetString(reader.GetOrdinal("Nombre")),
                                 Email = reader.GetString(reader.GetOrdinal("Email")),
-                                Rol = reader.GetString(reader.GetOrdinal("Rol"))
+                                Rol = reader.GetString(reader.GetOrdinal("Rol")),
+                                Estado = reader.GetBoolean(reader.GetOrdinal("Estado"))
                             };
                             listaUsuario.Add(usuario);
                         }

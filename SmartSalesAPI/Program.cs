@@ -1,6 +1,8 @@
 using SmartSales.Business.Services;
 using SmartSales.Data.ClienteRepository;
 using SmartSales.Data.ProductoRepository;
+using SmartSales.Data.UsuarioRepository;
+using SmartSales.Business.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +12,16 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
 // Agrega el servicio para ClienteRepository y ClienteServices
-builder.Services.AddScoped<SmartSales.Business.Interfaces.IClienteRepository, ClienteRepository>();// Forma correcta: AddScoped<Interfaz, Implementación>()
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();// Forma correcta: AddScoped<Interfaz, Implementación>()
 builder.Services.AddScoped<ClienteServices>(); // Tu servicio se queda igual (a menos que también le hayas creado una interfaz IClienteServices)
 
 // Agrega el servicio para ProductoRepository y ProductServices
-builder.Services.AddScoped<SmartSales.Business.Interfaces.IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<ProductServices>();
+
+// Agrega el servicio para UsuarioRepository y UsuarioServices
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<UsuarioServices>();
 
 builder.Services.AddOpenApi();
 

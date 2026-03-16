@@ -6,7 +6,7 @@ namespace SmartSalesAPI.Mappers
 {
     public class UsuarioMapper
     {
-        public static ResponderUsuarioDTO ToResponderDTO(Usuario usuario)
+        public static ResponderUsuarioDTO ToResponseDTO(Usuario usuario)
         {
             return new ResponderUsuarioDTO
             {
@@ -14,6 +14,7 @@ namespace SmartSalesAPI.Mappers
                 Nombre = usuario.Nombre,
                 Email = usuario.Email,
                 Rol = usuario.Rol
+                
             };
         }
 
@@ -41,7 +42,7 @@ namespace SmartSalesAPI.Mappers
 
         public static List<ResponderUsuarioDTO> ToDTOList(List<Usuario> usuarios)
         {
-            return usuarios.Select(u => ToResponderDTO(u)).ToList();
+            return usuarios.Select(u => ToResponseDTO(u)).ToList();
         }
     }
 }
