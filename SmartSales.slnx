@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="SmartSales.Business/SmartSales.Business.csproj" />
   <Project Path="SmartSales.Data/SmartSales.Data.csproj" />
+  <Project Path="SmartSales.Tests/SmartSales.Tests.csproj" Id="0fe56c6f-a702-4115-98f8-24b5b70e1a4b" />
   <Project Path="SmartSalesAPI/SmartSalesAPI.csproj" />
 </Solution>
