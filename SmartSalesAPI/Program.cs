@@ -3,6 +3,7 @@ using SmartSales.Data.ClienteRepository;
 using SmartSales.Data.ProductoRepository;
 using SmartSales.Data.UsuarioRepository;
 using SmartSales.Business.Interfaces;
+using SmartSales.Data.VentaRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,9 @@ builder.Services.AddScoped<ProductServices>();
 // Agrega el servicio para UsuarioRepository y UsuarioServices
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<UsuarioServices>();
+
+builder.Services.AddScoped<IVentaRepository, VentaRepository>();
+builder.Services.AddScoped<VentaServices>();
 
 builder.Services.AddOpenApi();
 

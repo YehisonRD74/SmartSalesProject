@@ -30,6 +30,7 @@ namespace SmartSalesAPI.Mappers
         {
             return new ResponderClienteDTO
             {
+                IdCliente = cliente.IdCliente,
                 Nombre = cliente.Nombre,
                 Email = cliente.Email,
                 Telefono = cliente.Telefono            

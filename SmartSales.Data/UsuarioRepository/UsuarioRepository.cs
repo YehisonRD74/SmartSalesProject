@@ -9,9 +9,10 @@ namespace SmartSales.Data.UsuarioRepository
     {
         private readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SmartSales; Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
 
+        // Buscar usuario por ID
         public async Task<Usuario> BuscarUsuarioPorIDAsync(int id)
         {
-            var usuario = new Usuario();
+            Usuario usuario = null;
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
             {
                 await cnn.OpenAsync();
@@ -38,6 +39,7 @@ namespace SmartSales.Data.UsuarioRepository
             }
         }
 
+        // Buscar usuario por nombre
         public async Task<List<Usuario>> BuscarUsuarioPorNombreAsync(string nombre)
         {
             List<Usuario> usuarios = new List<Usuario>();
@@ -69,6 +71,7 @@ namespace SmartSales.Data.UsuarioRepository
             }
         }
 
+        // Cambiar estado del usuario (activo/inactivo)
         public async Task CambiarEstadoUsuarioAsync(int id, bool estado)
         {
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
@@ -86,6 +89,7 @@ namespace SmartSales.Data.UsuarioRepository
             }
         }
 
+        // Crear nuevo usuario
         public async Task CrearUsuarioAsync(Usuario usuario)
         {
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
@@ -105,19 +109,20 @@ namespace SmartSales.Data.UsuarioRepository
             }
         }
 
+        // Modificar usuario existente
         public async Task ModificarUsuarioAsync(Usuario usuario)
         {
             using (SqlConnection cnn = new SqlConnection(ConnectionString))
             {
                 await cnn.OpenAsync();
-                using (SqlCommand cmd = new SqlCommand("Sp_CreateUser", cnn))
+                using (SqlCommand cmd = new SqlCommand("Sp_UpdateUser", cnn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@Id", usuario.IdUsuario);
                     cmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                     cmd.Parameters.AddWithValue("@Email", usuario.Email);
-                    cmd.Parameters.AddWithValue("@Contraseña", usuario.ContrasenaHash);
+                    cmd.Parameters.AddWithValue("@Contrasena", usuario.ContrasenaHash);
                     cmd.Parameters.AddWithValue("@Rol", usuario.Rol);
 
                     await cmd.ExecuteNonQueryAsync();
@@ -125,6 +130,7 @@ namespace SmartSales.Data.UsuarioRepository
             }
         }
 
+        // Mostrar todos los usuarios
         public async Task<List<Usuario>> MostrarUsuariosAsync()
         {
             var listaUsuario = new List<Usuario>();
