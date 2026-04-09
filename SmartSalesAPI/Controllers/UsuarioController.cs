@@ -29,7 +29,7 @@ namespace SmartSalesAPI.Controllers
             return StatusCode(201, new { message = "Usuario creado exitosamente.", data = UsuarioMapper.ToResponseDTO(usuarioEntity) });
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("Modificar/{id}")]
         public async Task<IActionResult> ModificarUsuario([FromRoute] int id, [FromBody] ModificarUsuarioDTO usuarioDTO)
         {
             if (id != usuarioDTO.IdUsuario) return BadRequest("El id del usuario no coincide");
