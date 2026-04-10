@@ -1,14 +1,12 @@
 ﻿using SmartSales.Business.Entidades;
 using SmartSales.Business.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SmartSales.Business.Services
 {
     public class UsuarioServices
     {
         private readonly IUsuarioRepository _usuarioRepository;
+
         public UsuarioServices(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
@@ -16,28 +14,41 @@ namespace SmartSales.Business.Services
 
         public async Task CrearUsuario(Usuario usuario)
         {
+            if (!string.IsNullOrWhiteSpace(usuario.ContrasenaHash))
+            {
+                usuario.ContrasenaHash = BCrypt.Net.BCrypt.HashPassword(usuario.ContrasenaHash);
+            }
+
             await _usuarioRepository.CrearUsuarioAsync(usuario);
         }
+
         public async Task ModificarUsuario(Usuario usuario)
         {
+            if (!string.IsNullOrWhiteSpace(usuario.ContrasenaHash) &&
+                !usuario.ContrasenaHash.StartsWith("$2"))
+            {
+                usuario.ContrasenaHash = BCrypt.Net.BCrypt.HashPassword(usuario.ContrasenaHash);
+            }
+
             await _usuarioRepository.ModificarUsuarioAsync(usuario);
         }
-        public async Task CambiarEstadoUsuario(int id, bool estado)
-        {
-            await _usuarioRepository.CambiarEstadoUsuarioAsync(id, estado);
-        }
-        public async Task<List<Usuario>> MostrarUsuarios()
-        {
-            return await _usuarioRepository.MostrarUsuariosAsync();
-        }
-        public async Task<List<Usuario>> BuscarUsuarioPorNombre(string nombre)
-        {
-            return await _usuarioRepository.BuscarUsuarioPorNombreAsync(nombre);
-        }
-        public async Task<Usuario> BuscarUsuarioPorID(int id)
-        {
-            return await _usuarioRepository.BuscarUsuarioPorIDAsync(id);
-        }
 
+        public Task CambiarEstadoUsuario(int id, bool estado) =>
+            _usuarioRepository.CambiarEstadoUsuarioAsync(id, estado);
+
+        public Task<List<Usuario>> MostrarUsuarios() =>
+            _usuarioRepository.MostrarUsuariosAsync();
+
+        public Task<List<Usuario>> BuscarUsuarioPorNombre(string nombre) =>
+            _usuarioRepository.BuscarUsuarioPorNombreAsync(nombre);
+
+        public Task<Usuario?> BuscarUsuarioPorNombreExacto(string nombre) =>
+            _usuarioRepository.BuscarUsuarioPorNombreExactoAsync(nombre);
+
+        public Task<Usuario> BuscarUsuarioPorID(int id) =>
+            _usuarioRepository.BuscarUsuarioPorIDAsync(id);
+
+        public Task<Usuario?> BuscarUsuarioPorEmail(string email) =>
+            _usuarioRepository.BuscarUsuarioPorEmailAsync(email);
     }
 }

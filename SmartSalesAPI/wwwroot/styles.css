@@ -1,0 +1,12 @@
+body {
+  background: #f5f7fb;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.mono {
+  font-family: Consolas, monospace;
+}

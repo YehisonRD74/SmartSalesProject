@@ -10,10 +10,16 @@ namespace SmartSales.Data.ClienteRepository
 {
     public class ClienteRepository : IClienteRepository
     {
-        private readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SmartSales; Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
+        private readonly IDbConnectionStringProvider _connectionStringProvider;
+
+        public ClienteRepository(IDbConnectionStringProvider connectionStringProvider)
+        {
+            _connectionStringProvider = connectionStringProvider;
+        }
+
         public async Task ActualizarClienteAsync(Cliente cliente)
         {
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_UpdateCustomer", cnn))
                 {
@@ -31,7 +37,7 @@ namespace SmartSales.Data.ClienteRepository
         public async Task<Cliente> BuscarClientePorIDAsync(int? id)
         {
             var cliente = new Cliente();
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetCustomerById", cnn))
                 {
@@ -61,7 +67,7 @@ namespace SmartSales.Data.ClienteRepository
         {
             List<Cliente> clientes = new List<Cliente>();
 
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetCustomersByName", cnn))
                 {
@@ -93,7 +99,7 @@ namespace SmartSales.Data.ClienteRepository
 
         public async Task CrearClienteAsync(Cliente cliente)
         {
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_CreateCustomer", cnn))
                 {
@@ -110,7 +116,7 @@ namespace SmartSales.Data.ClienteRepository
 
         public async Task EliminarClienteAsync(int id)
         {
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_DeleteCustomer", cnn))
                 {
@@ -126,7 +132,7 @@ namespace SmartSales.Data.ClienteRepository
         public async Task<List<Cliente>> MostrarClientesAsync()
         {
             var list = new List<Cliente>();
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetAllCustomers", cnn))
                 {

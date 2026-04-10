@@ -10,12 +10,16 @@ namespace SmartSales.Data.ProductoRepository
 {
     public class ProductoRepository : IProductoRepository
     {
-        // Usamos la misma cadena de conexión de tus otras clases
-        private readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SmartSales; Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
+        private readonly IDbConnectionStringProvider _connectionStringProvider;
+
+        public ProductoRepository(IDbConnectionStringProvider connectionStringProvider)
+        {
+            _connectionStringProvider = connectionStringProvider;
+        }
 
         public async Task CrearProductoAsync(Producto producto)
         {
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_CreateProduct", cnn))
                 {
@@ -33,7 +37,7 @@ namespace SmartSales.Data.ProductoRepository
 
         public async Task ModificarProductoAsync(Producto producto)
         {
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_UpdateProduct", cnn))
                 {
@@ -52,14 +56,14 @@ namespace SmartSales.Data.ProductoRepository
 
         public async Task EliminarProductoAsync(int id)
         {
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_DeleteProduct", cnn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     await cnn.OpenAsync();
 
-                    cmd.Parameters.AddWithValue("@IdProdæææ", id);
+                    cmd.Parameters.AddWithValue("@Id", id);
 
                     await cmd.ExecuteNonQueryAsync();
                 }
@@ -69,7 +73,7 @@ namespace SmartSales.Data.ProductoRepository
         public async Task<List<Producto>> MostrarProductosAsync()
         {
             var list = new List<Producto>();
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetAllProducts", cnn))
                 {
@@ -91,7 +95,7 @@ namespace SmartSales.Data.ProductoRepository
         public async Task<Producto> BuscarProductoPorIDAsync(int id)
         {
             Producto producto = null;
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetProductById", cnn))
                 {
@@ -116,7 +120,7 @@ namespace SmartSales.Data.ProductoRepository
         public async Task<List<Producto>> BuscarProductoPorNombreAsync(string nombre)
         {
             List<Producto> productos = new List<Producto>();
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("Sp_GetProductByName", cnn))
                 {

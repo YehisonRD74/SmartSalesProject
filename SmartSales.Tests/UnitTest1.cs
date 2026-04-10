@@ -1,4 +1,6 @@
-﻿namespace SmartSales.Tests
+﻿using Xunit;
+
+namespace SmartSales.Tests
 {
     public class UnitTest1
     {

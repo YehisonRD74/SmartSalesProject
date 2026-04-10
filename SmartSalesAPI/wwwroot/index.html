@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartSales - Frontend</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/styles.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="loginView" class="container min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-sm" style="max-width: 420px; width: 100%;">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-4 text-center">SmartSales</h1>
+        <form id="formLogin" class="vstack gap-2">
+          <input class="form-control" name="nombre" type="text" placeholder="Usuario" required />
+          <input class="form-control" name="password" type="password" placeholder="Contraseña" required />
+          <button class="btn btn-primary mt-2" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="appView" style="display:none;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand fw-bold">SmartSales</span>
+        <div class="d-flex align-items-center gap-2">
+          <small id="authInfo" class="text-white-50">No autenticado</small>
+          <button id="configBtn" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#configModal">Configuración</button>
+          <a class="btn btn-outline-light btn-sm" href="/swagger" target="_blank">Swagger</a>
+          <button id="btnLogout" class="btn btn-outline-warning btn-sm" type="button">Cerrar sesión</button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container py-4">
+      <div id="alertContainer"></div>
+
+      <section class="mb-4">
+        <h2 class="h4">Resumen</h2>
+        <div class="row g-3">
+          <div class="col-md-3"><div class="card p-3"><div class="text-muted">Clientes</div><div id="countClientes" class="h4 mb-0">-</div></div></div>
+          <div class="col-md-3"><div class="card p-3"><div class="text-muted">Productos</div><div id="countProductos" class="h4 mb-0">-</div></div></div>
+          <div class="col-md-3"><div class="card p-3"><div class="text-muted">Usuarios</div><div id="countUsuarios" class="h4 mb-0">-</div></div></div>
+          <div class="col-md-3"><div class="card p-3"><div class="text-muted">Ventas</div><div id="countVentas" class="h4 mb-0">-</div></div></div>
+        </div>
+      </section>
+
+      <ul class="nav nav-tabs" id="tabs" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#clientesTab">Clientes</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#productosTab">Productos</button></li>
+        <li class="nav-item" id="usersNavItem"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#usuariosTab">Usuarios</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ventasTab">Ventas</button></li>
+      </ul>
+
+      <div class="tab-content border border-top-0 p-3 bg-white shadow-sm rounded-bottom">
+        <section class="tab-pane fade show active" id="clientesTab">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <h3 class="h6">Crear cliente</h3>
+              <form id="formCliente" class="vstack gap-2">
+                <input class="form-control" name="nombre" placeholder="Nombre" required>
+                <input class="form-control" name="email" placeholder="Email">
+                <input class="form-control" name="telefono" placeholder="Teléfono" required>
+                <button class="btn btn-primary" type="submit">Guardar</button>
+              </form>
+            </div>
+            <div class="col-lg-8">
+              <div class="d-flex gap-2 mb-2">
+                <input id="buscarCliente" class="form-control" placeholder="Buscar por nombre">
+                <button id="btnBuscarCliente" class="btn btn-outline-secondary">Buscar</button>
+                <button id="btnRecargarClientes" class="btn btn-outline-primary">Recargar</button>
+              </div>
+              <div class="table-responsive"><table class="table table-sm table-striped"><thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th></th></tr></thead><tbody id="clientesBody"></tbody></table></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-pane fade" id="productosTab">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <h3 class="h6">Crear producto</h3>
+              <form id="formProducto" class="vstack gap-2">
+                <input class="form-control" name="nombre" placeholder="Nombre" required>
+                <input class="form-control" name="precio" type="number" min="0" step="0.01" placeholder="Precio" required>
+                <input class="form-control" name="stock" type="number" min="0" step="1" placeholder="Stock" required>
+                <button class="btn btn-primary" type="submit">Guardar</button>
+              </form>
+            </div>
+            <div class="col-lg-8">
+              <div class="d-flex gap-2 mb-2">
+                <input id="buscarProducto" class="form-control" placeholder="Buscar por nombre">
+                <button id="btnBuscarProducto" class="btn btn-outline-secondary">Buscar</button>
+                <button id="btnRecargarProductos" class="btn btn-outline-primary">Recargar</button>
+              </div>
+              <div class="table-responsive"><table class="table table-sm table-striped"><thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th></th></tr></thead><tbody id="productosBody"></tbody></table></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-pane fade" id="usuariosTab">
+          <div class="row g-3">
+            <div class="col-lg-4">
+              <h3 class="h6">Crear usuario</h3>
+              <form id="formUsuario" class="vstack gap-2">
+                <input class="form-control" name="nombre" placeholder="Nombre" required>
+                <input class="form-control" name="email" placeholder="Email">
+                <input class="form-control" name="contrasenaHash" placeholder="Contraseña" required>
+                <select class="form-select" name="rol">
+                  <option value="Vendedor">Vendedor</option>
+                  <option value="Administrador">Administrador</option>
+                </select>
+                <button class="btn btn-primary" type="submit">Guardar</button>
+              </form>
+            </div>
+            <div class="col-lg-8">
+              <div class="d-flex gap-2 mb-2">
+                <input id="buscarUsuario" class="form-control" placeholder="Buscar por nombre">
+                <button id="btnBuscarUsuario" class="btn btn-outline-secondary">Buscar</button>
+                <button id="btnRecargarUsuarios" class="btn btn-outline-primary">Recargar</button>
+              </div>
+              <div class="table-responsive"><table class="table table-sm table-striped"><thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Rol</th><th>Estado</th><th></th></tr></thead><tbody id="usuariosBody"></tbody></table></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tab-pane fade" id="ventasTab">
+          <div class="row g-3">
+            <div class="col-lg-5">
+              <h3 class="h6">Crear venta</h3>
+              <form id="formVenta" class="vstack gap-2">
+                <input class="form-control" name="idCliente" type="number" min="1" placeholder="ID Cliente" required>
+                <input class="form-control" name="idUsuario" type="number" min="1" placeholder="ID Usuario" required>
+
+                <div class="border rounded p-2 bg-light-subtle">
+                  <div class="fw-semibold mb-2">Detalle</div>
+                  <input class="form-control mb-2" name="idProducto" type="number" min="1" placeholder="ID Producto" required>
+                  <input class="form-control mb-2" name="cantidad" type="number" min="1" placeholder="Cantidad" required>
+                  <input class="form-control mb-2" name="precioUnitario" type="number" min="0" step="0.01" placeholder="Precio unitario" required>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Registrar venta</button>
+              </form>
+            </div>
+            <div class="col-lg-7">
+              <div class="d-flex gap-2 mb-2">
+                <button id="btnRecargarVentas" class="btn btn-outline-primary">Recargar ventas</button>
+              </div>
+              <div class="table-responsive"><table class="table table-sm table-striped"><thead><tr><th>ID</th><th>Cliente</th><th>Vendedor</th><th>Fecha</th><th>Total</th></tr></thead><tbody id="ventasBody"></tbody></table></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="modal fade" id="configModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Configuración</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="formConfiguracion" class="vstack gap-3">
+              <div>
+                <label class="form-label">URL Base API</label>
+                <input id="configApiBaseUrl" class="form-control" placeholder="https://localhost:7005">
+                <div class="form-text">Vacío = misma URL del frontend.</div>
+              </div>
+              <div>
+                <label class="form-label">Connection String SQL Server</label>
+                <textarea id="configConnectionString" class="form-control mono" rows="4" placeholder="Server=...;Database=...;"></textarea>
+                <div class="form-text">Se aplica al backend en ejecución.</div>
+              </div>
+              <button class="btn btn-primary" type="submit">Guardar configuración</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

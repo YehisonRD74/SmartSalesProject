@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartSales.Business.Services;
 using SmartSalesAPI.DTO.Producto;
 using SmartSalesAPI.Mappers;
@@ -8,6 +9,7 @@ namespace SmartSalesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Administrador,Vendedor")]
     public class ProductoController : ControllerBase
     {
         private readonly ProductServices _productServices;

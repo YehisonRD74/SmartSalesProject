@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartSales.Business.Services;
 using SmartSalesAPI.DTO.DetallesVenta;
@@ -9,6 +10,7 @@ namespace SmartSalesAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administrador,Vendedor")]
     public class VentaController : Controller
     {
         private readonly VentaServices _ventaServices;
@@ -23,7 +25,7 @@ namespace SmartSalesAPI.Controllers
             var ventas = await _ventaServices.MostrarVentas();
             if (ventas == null || !ventas.Any())
             {
-                return NotFound("No se encontraron ventas registradas.");
+                return Ok(new List<MostrarVentaDTO>());
             }
 
             return Ok(VentaMapper.MapToMostrarDTO(ventas));

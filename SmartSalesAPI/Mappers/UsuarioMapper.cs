@@ -13,7 +13,8 @@ namespace SmartSalesAPI.Mappers
                 IdUsuario = usuario.IdUsuario,
                 Nombre = usuario.Nombre,
                 Email = usuario.Email,
-                Rol = usuario.Rol
+                Rol = usuario.Rol,
+                Estado = usuario.Estado
                 
             };
         }

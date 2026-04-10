@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartSales.Business.Entidades;
 using SmartSales.Business.Services;
 using SmartSales.Data.ClienteRepository;
@@ -10,6 +11,7 @@ namespace SmartSalesAPI.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Administrador,Vendedor")]
     public class ClienteController : ControllerBase
     {
         private readonly ClienteServices _clienteServices;

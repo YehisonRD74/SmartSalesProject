@@ -12,11 +12,16 @@ namespace SmartSales.Data.VentaRepository
 {
     public class VentaRepository : IVentaRepository
     {
-        private readonly string ConnectionString = "Server=(localdb)\\MSSQLLocalDB; Database=SmartSales; Trusted_Connection=True;Encrypt=False;TrustServerCertificate=True;";
+        private readonly IDbConnectionStringProvider _connectionStringProvider;
+
+        public VentaRepository(IDbConnectionStringProvider connectionStringProvider)
+        {
+            _connectionStringProvider = connectionStringProvider;
+        }
 
         public async Task<int> CrearVentaCompletaAsync(Venta venta)
         {
-            using (var cnn = new SqlConnection(ConnectionString))
+            using (var cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 await cnn.OpenAsync();
 
@@ -77,7 +82,7 @@ namespace SmartSales.Data.VentaRepository
         public async Task<List<Venta>> MostrarVentasAsync()
         {
             var ventas = new List<Venta>();
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 await cnn.OpenAsync();
                 using (SqlCommand cmd = new SqlCommand("Sp_GetAllVentas", cnn))
@@ -115,7 +120,7 @@ namespace SmartSales.Data.VentaRepository
         public async Task<Venta> BuscarVentaPorIdAsync(int id)
         {
             Venta venta = null;
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 await cnn.OpenAsync();
                 using (SqlCommand cmd = new SqlCommand("Sp_GetVentaById", cnn))
@@ -159,7 +164,7 @@ namespace SmartSales.Data.VentaRepository
             // Usamos esta variable para saber si ya leímos al cliente y al vendedor
             bool encabezadoYaLeido = false;
 
-            using (SqlConnection cnn = new SqlConnection(ConnectionString))
+            using (SqlConnection cnn = new SqlConnection(_connectionStringProvider.ConnectionString))
             {
                 await cnn.OpenAsync();
                 using (SqlCommand cmd = new SqlCommand("Sp_GetDetallesByVenta", cnn))
